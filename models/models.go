@@ -7,17 +7,14 @@ import (
 )
 
 type Payload struct {
-	Version       Version `json:"version"`
-	ReturnSuccess bool    `json:"return_success"`
-	Caller        string  `json:"callers"`
-	Calls         []Call  `json:"calls"`
-	Callbacks     []Call  `json:"callbacks"`
+	Version Version `json:"version"`
+	Caller  string  `json:"callers"`
+	Calls   []Call  `json:"calls"`
 }
 
 type Call struct {
-	Key       string `json:"key"`
-	Calls     []Call `json:"calls"`
-	Callbacks []Call `json:"callbacks"`
+	Key   string `json:"key"`
+	Calls []Call `json:"calls"`
 }
 
 type Source struct {

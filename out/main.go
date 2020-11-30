@@ -17,10 +17,8 @@ type Config struct {
 }
 
 type Params struct {
-	ContinueFrom    string        `json:"continue_from"`
-	CallbackFrom    string        `json:"callback_from"`
-	CallbackFailure bool          `json:"callback_failure"`
-	Calls           []models.Call `json:"calls"`
+	ContinueFrom string        `json:"continue_from"`
+	Calls        []models.Call `json:"calls"`
 }
 
 type Output struct {
@@ -67,24 +65,6 @@ func main() {
 		)
 	}
 
-	if cfg.Params.CallbackFrom != "" {
-		calls, err := getCallbacks(
-			filepath.Join(
-				inputResourceDir,
-				cfg.Params.CallbackFrom,
-			),
-		)
-
-		if err != nil {
-			utils.Bail(err.Error())
-		}
-
-		packaged = append(
-			packaged,
-			packageCalls(calls, cfg.Params.CallbackFailure)...,
-		)
-	}
-
 	drv, err := driver.New(cfg.Source)
 	if err != nil {
 		utils.Bail("Failed to initialize driver: %s", err)
@@ -123,10 +103,6 @@ func main() {
 
 func getContinuations(dir string) ([]models.Call, error) {
 	return readJSONFromFile(filepath.Join(dir, "calls"))
-}
-
-func getCallbacks(dir string) ([]models.Call, error) {
-	return readJSONFromFile(filepath.Join(dir, "callbacks"))
 }
 
 func readJSONFromFile(path string) ([]models.Call, error) {
@@ -177,10 +153,8 @@ func packageCalls(calls []models.Call, failed bool) []keyPayloadPair {
 			keyPayloadPair{
 				Key: call.Key,
 				Payload: models.Payload{
-					ReturnSuccess: !failed,
-					Caller:        utils.CallerName(),
-					Calls:         call.Calls,
-					Callbacks:     call.Callbacks,
+					Caller: utils.CallerName(),
+					Calls:  call.Calls,
 				},
 			},
 		)

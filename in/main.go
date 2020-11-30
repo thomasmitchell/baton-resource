@@ -85,15 +85,10 @@ func get(source models.Source, clearStack bool) Output {
 		writeJSON(filepath.Join(outputDir, "calls"), payload.Calls)
 	}
 
-	if len(payload.Callbacks) > 0 {
-		writeJSON(filepath.Join(outputDir, "callbacks"), payload.Callbacks)
-	}
-
 	//clear out calls/callbacks on upstream resource to avoid future calls to this
 	// "function" going through the same stack
 	if clearStack {
 		payload.Calls = []models.Call{}
-		payload.Callbacks = []models.Call{}
 
 		err = drv.Write(source.Key, *payload)
 		if err != nil {
