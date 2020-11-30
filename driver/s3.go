@@ -93,7 +93,7 @@ func (s *s3Driver) ReadVersion(key string) (*models.Version, error) {
 	if err != nil {
 		if aerr, ok := err.(awserr.Error); ok {
 			if aerr.Code() == s3.ErrCodeNoSuchKey {
-				return &models.Version{}, nil
+				return &models.Version{Number: "0"}, nil
 			}
 		}
 		return nil, err
