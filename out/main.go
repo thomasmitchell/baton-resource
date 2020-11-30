@@ -17,7 +17,6 @@ type Config struct {
 }
 
 type Params struct {
-	Caller          string        `json:"caller"`
 	ContinueFrom    string        `json:"continue_from"`
 	CallbackFrom    string        `json:"callback_from"`
 	CallbackFailure bool          `json:"callback_failure"`
