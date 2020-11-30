@@ -51,7 +51,7 @@ func (v Version) LessThan(v2 Version) bool {
 func (v Version) Bump() Version {
 	vu, err := strconv.ParseUint(v.Number, 10, 64)
 	if err != nil {
-		utils.Bail("Unsupport number format for version `%s': %s", v.Number, err)
+		utils.Bail("Unsupported number format for version `%s': %s", v.Number, err)
 	}
 
 	return Version{
