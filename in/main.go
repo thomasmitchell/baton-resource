@@ -21,8 +21,8 @@ type Params struct {
 }
 
 type Output struct {
-	Version  models.Version    `json:"version"`
-	Metadata map[string]string `json:"metadata"`
+	Version  models.Version      `json:"version"`
+	Metadata []map[string]string `json:"metadata"`
 }
 
 func main() {
@@ -82,8 +82,8 @@ func main() {
 
 	output := Output{
 		Version: payload.Version,
-		Metadata: map[string]string{
-			"caller": payload.Caller,
+		Metadata: []map[string]string{
+			{"caller": payload.Caller},
 		},
 	}
 	enc := json.NewEncoder(os.Stdout)
