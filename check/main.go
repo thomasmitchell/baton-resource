@@ -32,11 +32,14 @@ func main() {
 		cfg.Version.Number = "0"
 	}
 
+	output := []models.Version{}
 	if cfg.Version.LessThan(*remoteVersion) {
-		enc := json.NewEncoder(os.Stdout)
-		err = enc.Encode([]models.Version{*remoteVersion})
-		if err != nil {
-			utils.Bail("Error encoding output value: %s", err)
-		}
+		output = append(output, *remoteVersion)
+	}
+
+	enc := json.NewEncoder(os.Stdout)
+	err = enc.Encode([]models.Version{*remoteVersion})
+	if err != nil {
+		utils.Bail("Error encoding output value: %s", err)
 	}
 }
