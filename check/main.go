@@ -23,14 +23,18 @@ func main() {
 	}
 
 	drv, err := driver.New(cfg.Source)
-	payload, err := drv.Read(cfg.Source.Key)
+	remoteVersion, err := drv.ReadVersion(cfg.Source.Key)
 	if err != nil {
 		utils.Bail("Error when reading from remote: %s", err)
 	}
 
-	if cfg.Version.LessThan(payload.Version) {
+	if cfg.Version.Number == "" {
+		cfg.Version.Number = "0"
+	}
+
+	if cfg.Version.LessThan(*remoteVersion) {
 		enc := json.NewEncoder(os.Stdout)
-		err = enc.Encode([]models.Version{payload.Version})
+		err = enc.Encode([]models.Version{*remoteVersion})
 		if err != nil {
 			utils.Bail("Error encoding output value: %s", err)
 		}
