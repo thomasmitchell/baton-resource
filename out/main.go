@@ -48,8 +48,15 @@ func main() {
 		)
 	}
 
+	inputResourceDir := os.Args[1]
+
 	if cfg.Params.ContinueFrom != "" {
-		calls, err := getContinuations(cfg.Params.ContinueFrom)
+		calls, err := getContinuations(
+			filepath.Join(
+				inputResourceDir,
+				filepath.Base(cfg.Params.ContinueFrom),
+			),
+		)
 		if err != nil {
 			utils.Bail(err.Error())
 		}
@@ -61,7 +68,13 @@ func main() {
 	}
 
 	if cfg.Params.CallbackFrom != "" {
-		calls, err := getCallbacks(cfg.Params.CallbackFrom)
+		calls, err := getCallbacks(
+			filepath.Join(
+				inputResourceDir,
+				cfg.Params.CallbackFrom,
+			),
+		)
+
 		if err != nil {
 			utils.Bail(err.Error())
 		}
