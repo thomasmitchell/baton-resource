@@ -99,7 +99,7 @@ func main() {
 
 	output := Output{
 		Version:  *version,
-		Metadata: map[string]string{},
+		Metadata: []map[string]string{},
 	}
 	enc := json.NewEncoder(os.Stdout)
 	err = enc.Encode(&output)
