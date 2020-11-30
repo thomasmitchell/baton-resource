@@ -40,9 +40,9 @@ func main() {
 		output = get(cfg.Source, cfg.Params.ClearStack)
 	} else {
 		output = Output{
-			Version: models.Version{ Number: "0" }, 
+			Version: models.Version{Number: "0"},
 			Metadata: []map[string]string{
-				{"skipped": "true"},
+				{"name": "skipped", "value": "true"},
 			},
 		}
 	}
@@ -99,7 +99,7 @@ func get(source models.Source, clearStack bool) Output {
 	return Output{
 		Version: payload.Version,
 		Metadata: []map[string]string{
-			{"caller": payload.Caller},
+			{"name": "caller", "value": payload.Caller},
 		},
 	}
 }
